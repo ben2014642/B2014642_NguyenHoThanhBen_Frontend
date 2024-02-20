@@ -44,9 +44,10 @@ export default {
         Field,
         ErrorMessage,
     },
-    emits: ["submit:contact", "delete:contact"],
+    emits: ["submit:contact", "delete:contact", "create:contact"],
     props: {
-        contact: { type: Object, required: true }
+        contact: { type: Object, required: true },
+        typeSubmit: { type: String }
     },
     data() {
         const contactFormSchema = yup.object().shape({
@@ -76,7 +77,14 @@ export default {
     },
     methods: {
         submitContact() {
-            this.$emit("submit:contact", this.contactLocal);
+            console.log('123');
+            if (this.typeSubmit == 'edit') {
+                console.log('1');
+                this.$emit("submit:contact", this.contactLocal);
+            } else {
+                console.log('2');
+                this.$emit("create:contact", this.contactLocal);
+            }
         },
         deleteContact() {
             this.$emit("delete:contact", this.contactLocal.id);
